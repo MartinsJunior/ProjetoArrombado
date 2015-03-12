@@ -18,7 +18,7 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
-    // comentário coco qualquer 3
+
     public MainFrame() {
         initComponents();
     }
