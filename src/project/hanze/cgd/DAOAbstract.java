@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 package project.hanze.cgd;
 
 import java.sql.*;
-import java.util.Properties;
 
 public abstract class DAOAbstract {
 

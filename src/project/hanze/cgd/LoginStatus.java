@@ -7,7 +7,7 @@ package project.hanze.cgd;
 
 /**
  *
- * @author juniorm10
+ * @author G.A.Y
  */
 public enum LoginStatus {
     OK, BLOCKED,BAD;
