@@ -39,10 +39,6 @@ public abstract class DAOAbstract {
         return rs;
     }
 
-    protected void closeStatement() throws SQLException {
-        statement.close();
-    }
-
     protected int executeUpdate(String query) throws SQLException {
         this.statement = connection.createStatement();		
             int numero = 0;
@@ -59,6 +55,7 @@ public abstract class DAOAbstract {
 
     protected void closeConnection() throws SQLException {
         connection.close();
+        statement.close();
     }
 
 }

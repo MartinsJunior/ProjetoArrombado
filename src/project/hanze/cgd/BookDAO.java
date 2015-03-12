@@ -54,10 +54,10 @@ public class BookDAO extends DAOAbstract implements DAO<Book> {
 
     @Override
     public ArrayList<Book> read(Class<Book> classe) throws SQLException {
-        ArrayList<Book> books = new ArrayList<>();
-        this.openConnection();
-        String sql = "SELECT DISTINCT author FROM BOOK";
-        ResultSet r = this.executeQuery(sql);
+//        ArrayList<Book> books = new ArrayList<>();
+//        this.openConnection();
+//        String sql = "SELECT DISTINCT author FROM BOOK";
+//        ResultSet r = this.executeQuery(sql);
         return null;
     }
 
