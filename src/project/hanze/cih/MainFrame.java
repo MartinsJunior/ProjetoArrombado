@@ -5,7 +5,7 @@
  */
 package project.hanze.cih;
 
-import apple.laf.JRSUIUtils.InternalFrame;
+
 import project.hanze.cci.CtrlRegisterStudent;
 import project.hanze.cci.CtrlRegisterTeacher;
 
@@ -18,8 +18,7 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
-    InternalFrame internalFrame = new InternalFrame();
-
+    
     public MainFrame() {
         initComponents();
     }
