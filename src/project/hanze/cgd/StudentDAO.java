@@ -93,6 +93,7 @@ public class StudentDAO extends DAOAbstract implements DAO<Student> {
                 resultSet = preparedStatement.executeQuery();
                 result = resultSet.getInt(1);
             }
+            resultSet.close();
             this.closeConnection();
             return result;
         } catch (SQLException ex) {
@@ -116,6 +117,7 @@ public class StudentDAO extends DAOAbstract implements DAO<Student> {
             if (resultSet.next()) {
                 name = resultSet.getString(1);
             }
+            resultSet.close();
 
             this.closeConnection();
             return name;
@@ -171,6 +173,7 @@ public class StudentDAO extends DAOAbstract implements DAO<Student> {
                 resultSet = preparedStatement.executeQuery();
                 result = resultSet.next();
             }
+            resultSet.close();
             this.closeConnection();
             return result;
         } catch (SQLException ex) {
@@ -199,41 +202,69 @@ public class StudentDAO extends DAOAbstract implements DAO<Student> {
         this.closeConnection();
     }
 
-    public void setAttemptsZero(String studentId) throws SQLException {
-        String sql = "UPDATE student SET loginAttempts = 0 where studentId = '" + studentId + "'";
-        this.openConnection();
-        this.executeUpdate(sql);
-        this.closeConnection();
+       
+    public void setAttemptsZero(String studentId) {
+        try {
+            this.openConnection();
+            String sql = "UPDATE student SET loginAttempts = 0 where studentId = ?";
+                        
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, studentId);
+                preparedStatement.executeUpdate();
+            }
+            
+            this.closeConnection();
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    public boolean queryBorrowed(Student student) throws SQLException {
-        this.openConnection();
-        String sql = "SELECT * FROM STUDENT WHERE name = ? AND booksBorrowed < 3";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, student.getName());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        boolean r = resultSet.next();
-        this.closeConnection();
-        this.closeStatement();
-        return r;
+    public boolean queryBorrowed(Student student) {
+        try {
+            this.openConnection();
+            String sql = "SELECT * FROM STUDENT WHERE name = ? AND booksBorrowed < 3";
+            
+            ResultSet resultSet;
+            boolean result;
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, student.getName());
+                resultSet = preparedStatement.executeQuery();
+                result = resultSet.next();
+            }
+                       
+            this.closeConnection();
+            return result;
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
-    public int getId(Student student) throws SQLException {
-        this.openConnection();
-        String sql = "SELECT * FROM STUDENT WHERE name= ? and studentId = ?";
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, student.getName());
-        preparedStatement.setString(2, student.getStudentId());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        int id = resultSet.getInt("Id");
-        this.closeConnection();
-        this.closeStatement();
-        return id;
+    public int getId(Student student) {
+        try {
+            this.openConnection();
+            String sql = "SELECT * FROM STUDENT WHERE name= ? and studentId = ?";
+
+            ResultSet resultSet;
+            int id;
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, student.getName());
+                preparedStatement.setString(2, student.getStudentId());
+                resultSet = preparedStatement.executeQuery();
+                id = resultSet.getInt("Id");
+            }
+            this.closeConnection();
+            return id;
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
     }
 
     @Override
     public List<Student> read(Class<Student> classe) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return null;
     }
 
 }
